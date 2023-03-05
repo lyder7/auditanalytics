@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>ch_2_statistics_analytics.Rmd</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h2 id="business-and-data-analytics">Business and Data Analytics</h2>
+<p>A typical first step in analytical review of a company might be to review the industry statistics to find out what part, if any, of our client's financial accounts are outliers in the industry.  Unusual account values or relationships can  indicate audit risks that would require a broader scope of auditing.  Exploratory statistics are easy to implement, yet are ideal for quickly highlighting unusual account values.  We will first load a dataset of industry statistics that have been downloaded from the Wharton Research Data Service repository, and conduct simple summaries of the data.  The R package <em>plotluck</em> automatically chooses graphs that are appropriate for the data, and is an ideal tool for quick visualization of data. We ask: What variables are contains and how they are distributed? In general, R lets the dot symbols stands for “all variables in the data set” and &quot;.~1&quot; regresses the variable against the intercept, thus giving the distribution (essentially an smoothed histogram)</p>
+<pre class="hljs"><code><div>
+
+library(tidyverse)
+library(plotluck)
+library(broom)
+
+industry_stats &lt;- read.csv(&quot;/home/westland/audit_analytics_book/aaa_chapters/tables/ch_2_dataset.csv&quot;)
+
+summary(industry_stats)
+
+plotluck(industry_stats, .~1)
+
+</div></code></pre>
+<p>There are four continuous  (employees, income, sales and capitalization) and one categorical (fiscal year) variable; we will get rid of the ticker.  Where there is a significant range of values in a variable, plotluck automatically presents the x-axis on a log scale.  Let's explore income and the influence of other variables.  Output is set to 'verbose' in order to estimate conditional entropies for ordering the plot (lower values indicate stronger informational value). There is a clear correlation of income with capitalization, which we can assess by applying frequency weights.</p>
+<pre class="hljs"><code><div>
+industry_stats &lt;- industry_stats[,-1]
+plotluck(industry_stats, income~.)
+
+</div></code></pre>
+<p>How has the industry's profit changed over the recent past?</p>
+<pre class="hljs"><code><div>
+plotluck(industry_stats, income~fiscal_year)
+
+</div></code></pre>
+<p>How do sales and headcount influence income?  This chart is 3-dimensional, with color providing a third dimension for assessing correlations.  During analytical review, the auditor can use such analyses to find whether the client's accounts vary from industry averages.</p>
+<pre class="hljs"><code><div>
+plotluck(industry_stats, income~sales+employees, weights=capitalization)
+
+</div></code></pre>
+<p>How has this distribution changed over time?</p>
+<pre class="hljs"><code><div>
+plotluck(industry_stats, income~employees|fiscal_year)
+plotluck(industry_stats, income~sales|fiscal_year)
+plotluck(industry_stats, income~capitalization|fiscal_year)
+
+
+</div></code></pre>
+<h2 id="accounting-data-types-numerical-vs-categorical">Accounting Data Types: Numerical vs. Categorical</h2>
+<p>There are two basic types of structured data: numeric and categorical. Numeric data comes in two forms: continuous, such as wind speed or time duration, and discrete, such as the count of the occurrence of an event. Categorical data takes only a fixed set of values, such as a type of TV screen (plasma, LCD, LED, etc.) or a state name (Alabama, Alaska, etc.). Binary data is an important special case of categorical data that takes on only one of two values, such as 0/1, yes/no, or true/false. Another useful type of categorical data is ordinal data in which the categories are ordered; an example of this is a numerical rating (1, 2, 3, 4, or 5).</p>
+<p>Why do we bother with a taxonomy of data types? It turns out that for the purposes of data analysis and predictive modeling, the data type is important to help determine the type of visual display, data analysis, or statistical model. In fact, data science software, such as R and Python, uses these data types to improve computational performance. More important, the data type for a variable determines how software will handle computations for that variable.</p>
+<pre class="hljs"><code><div>
+
+library(tidyverse)
+library(plotluck)
+library(broom)
+
+sox_stats &lt;- 
+  read.csv(
+    &quot;/home/westland/audit_analytics_book/aaa_chapters/tables/ch_2_data_types.csv&quot;)
+
+summary(sox_stats)
+
+</div></code></pre>
+<h3 id="continuous-interval-float-numeric-data">Continuous (interval, float, numeric) data</h3>
+<p>Many of our key financial metrics are continuous measures.  Conceptually, we can subdivide continuous data without end. We can look at the density functions of  continuous data using the plotluck package.</p>
+<h3 id="discrete-integer-count-data">Discrete (integer, count) data</h3>
+<p>In practice, our minimum level of resolution in accounts is one dollar (or single monetary unit). This resolution limit is in fact the basis of audit procedures such as dollar-unit sampling.  We are not limited to dollar levels of resolution; annual reports may use thousands or millions of dollars as their level of resolution.  In this example we use ggplot to produce a histogram of discrete values.  The level of resolution determines the number of bins, in this case 20.  Human cognition tends to be overwhelmed by large numbers of bins, which is why we often see financial statistics summarized at levels of resolution larger than one dollar.</p>
+<pre class="hljs"><code><div>
+library(ggplot2)
+
+sox_stats &lt;- 
+  read.csv(
+    &quot;/home/westland/audit_analytics_book/aaa_chapters/tables/ch_2_data_types.csv&quot;)
+sox_stats[,c(&quot;audit_fee&quot;,&quot;non_audit_fee&quot;,&quot;tax_fees&quot;)] %&gt;% 
+ggplot(aes(x=audit_fee)) + geom_histogram(bins=20)
+
+
+</div></code></pre>
+<h2 id="categorical-enums-enumerated-factors-nominal-polychotomous-data">Categorical (enums, enumerated, factors, nominal, polychotomous) data</h2>
+<p>Categorical data can take on only a specific set of values representing a set of possible categories.  The firm's Chart of Accounts imposes a categorical data scheme on the economic events which are the basis of journal entries in the accounting system.  In our Sarbanes-Oxley data, we might be interested in the variation over time of audit fees, categorized by the firms they were charged to.</p>
+<pre class="hljs"><code><div>
+sox_stats &lt;- 
+  sox_stats[,c(&quot;ticker&quot;,&quot;audit_fee&quot;,&quot;non_audit_fee&quot;,&quot;tax_fees&quot;)] 
+sox_stats[which(as.character(sox_stats$ticker)&lt;'AI'), ] %&gt;% 
+  ggplot(aes(x=ticker, y= audit_fee)) +  
+  geom_violin()  +
+    scale_y_continuous(trans = &quot;log10&quot;)
+  
+
+</div></code></pre>
+<pre class="hljs"><code><div>
+
+library(tidyverse)
+library(plotluck)
+library(broom)
+
+bank_fin &lt;- 
+  read.csv(&quot;/home/westland/audit_analytics_book/aaa_chapters/tables/ch_2_yahoo_fin.csv&quot;) 
+bank_fin$change &lt;- 
+  as.numeric(bank_fin$change)
+bank_fin$capitalization &lt;- 
+  as.numeric(bank_fin$capitalization )
+bank_fin &lt;-  
+  gather(bank_fin, 
+         key=&quot;metric&quot;, 
+         value = value, 
+         price, 
+         change, 
+         percent_change, 
+         volume, 
+         vol_ave, 
+         capitalization,
+         pe_ratio)
+
+bank_fin %&gt;% ggplot(aes(x=metric, y=value)) + 
+  geom_boxplot() +
+  scale_y_continuous(trans = &quot;log10&quot;)
+
+
+</div></code></pre>
+<h2 id="binary-dichotomous-logical-indicator-boolean-data">Binary (dichotomous, logical, indicator, Boolean) data</h2>
+<p>Binary data represents a special case of categorical data with just two categories.  These are data's way of providing answers to <em>yes / no</em> or <em>true / false</em>.  An audit opinion will provide a yes / no answer concerning whether the financial statements are fairly presented.   Usually we are not just interested in the answer, but why particular circumstances, treatments or parameter settings resulted in this answer.  In the following figure, we are interested in whether credit card fraud is influenced by the fees paid to the auditor. We analyze a binary variable by looking at the variation in other variables under a $0$ or $1$ value of the binary variable.</p>
+<pre class="hljs"><code><div>
+
+library(tidyverse)
+library(plotluck)
+library(broom)
+
+sox_stats &lt;- 
+  read.csv(
+    &quot;/home/westland/audit_analytics_book/aaa_chapters/tables/ch_2_data_types.csv&quot;) 
+
+ggplot(sox_stats, aes(x=non_audit_fee, y=audit_fee, col=card)) + 
+  geom_violin() +
+  labs(col = &quot;Fraud = 1 (green)&quot;)
+
+</div></code></pre>
+<p>We can similarly inspect the influence of audit fees on all of the binary variables from SOX reporting in the SOX dataset.</p>
+<pre class="hljs"><code><div>
+library(tidyverse)
+library(plotluck)
+library(broom)
+
+sox_stats &lt;- 
+  read.csv(
+    &quot;/home/westland/audit_analytics_book/aaa_chapters/tables/ch_2_data_types.csv&quot;) 
+
+sox_stats$card &lt;- 
+  as.integer(sox_stats$card)
+
+sox_stats1 &lt;-  
+  gather(sox_stats, 
+         key=&quot;metric&quot;, 
+         value = value, 
+         effective_303,
+         mat_weak_303,
+         sig_def_303, 
+         effective_404, 
+         auditor_agrees_303)
+
+ggplot(sox_stats1, aes(x=non_audit_fee, y=audit_fee, col=metric)) + 
+  geom_violin() +
+  scale_x_continuous(trans = &quot;log2&quot;) +
+  scale_y_continuous(trans = &quot;log2&quot;) 
+
+
+</div></code></pre>
+<h2 id="ordinal-ordered-factor-data">Ordinal (ordered factor) data</h2>
+<p>Ordinal data is categorical data with an explicit ordering. Ordinal data provides an important control over documents of original entry in accounting systems.  When a journal entry of any sort is generated, it must be uniquely identifiable, and generally the sequence of identifying numbers are assigned in chronological sequence.  In the days of paper transaction processing, accountants expected firms to initiate transactions on prenumbered forms, often with numerous copies made simultaneously through the use of (messy) carbon paper.  Modern systems assign these numbers internally, but auditors still consider sequential number of input documents to be one of the more important internal controls in a system.</p>
+<pre class="hljs"><code><div>
+library(tidyverse)
+library(lubridate)
+library(kableExtra)
+
+
+## create a function to generate a random date in the current year
+
+rdate &lt;- function(x,
+                  min = paste0(format(Sys.Date(), '%Y'), '-01-01'),
+                  max = paste0(format(Sys.Date(), '%Y'), '-12-31'),
+                  sort = TRUE) {
+  dates &lt;- sample(seq(as.Date(min), as.Date(max), by = &quot;day&quot;), x, replace = TRUE)
+  if (sort == TRUE) {
+    sort(dates)
+  } else {
+    dates
+  }
+}
+
+## generate 1000 invoices with dates
+
+invoice_no &lt;- date &lt;- 1:1000  ## placeholder
+journal_ent_no &lt;- cbind.data.frame(invoice_no,date)
+date &lt;- rdate(1000)
+journal_ent_no$date &lt;- date[order(date)]
+journal_ent_no$invoice_no &lt;- seq(1,1000) + rbinom(1000,1,.1) # add some errors
+
+duplicates &lt;- duplicated(journal_ent_no$invoice_no)
+raw &lt;- seq(1,1000)
+journal_dups &lt;- cbind.data.frame(raw,duplicates)
+
+ggplot(journal_dups, aes(x=invoice_no, y=raw, col=duplicates)) + 
+  geom_point()
+</div></code></pre>
+<p>Tables are always an option for omissions and duplications</p>
+<pre class="hljs"><code><div>
+library(tidyverse)
+library(kableExtra)
+library(reshape2)
+
+
+journal_ent_no[journal_dups$duplicates==TRUE,] %&gt;% 
+  kable(longtable=T, caption = &quot;Duplicated Invoices&quot;) %&gt;% 
+  kable_styling(bootstrap_options = c(&quot;striped&quot;, &quot;hover&quot;, &quot;condensed&quot;), 
+                full_width = F, font_size=10,) %&gt;% 
+  column_spec(1, width = &quot;3em&quot;) %&gt;% 
+  column_spec(2, width = &quot;4em&quot;) 
+
+
+</div></code></pre>
+<p>But graphs provide immediate access to the degree of problem, by looking at the number of exceptions in the graph, and is most visible if exceptions are rendered in a contrasting color such as the green used in the accompanying charts.  Often this is all that the auditor needs to render an opinion on internal controls, as it is the client's responsibility to correct these problems.</p>
+<pre class="hljs"><code><div>
+
+
+journal_dups$omit &lt;- 0
+journal_dups$invoice &lt;- journal_ent_no$invoice_no
+journal_dups[journal_dups$raw[!journal_dups$raw %in% journal_ent_no$invoice],&quot;omit&quot;] &lt;- 1
+journal_dups$omit &lt;- as.logical(journal_dups$omit)
+
+ggplot(journal_dups, aes(x=invoice_no, y=raw, col=omit)) + 
+  geom_point()+
+  labs(col = &quot;Invoice Omitted?&quot;)
+
+
+
+
+
+</div></code></pre>
+<h2 id="data-storage-and-retrieval">Data Storage and Retrieval</h2>
+<p>The amount of recorded data produced by human activity has probably been growing exponentially for more than a millennium.  Most data today is digitized, both for archival storage as well as display.  This is good for the environment (newsprint alone in the 1970s accounted for 17% of US waste) but it also means that this data is potentially available for computer processing.  The current amount of digitized data is around 20 trillion GB.  Much of this increase has been fueled by new structures for storing and retrieving data $-$ video, text, and vast streams of surveillance data $-$ that have arisen since the commercialization of the internet in the 1990s.</p>
+<pre class="hljs"><code><div>
+
+library(plotluck)
+
+
+big_data &lt;- read.csv(&quot;/home/westland/audit_analytics_book/aaa_chapters/tables/ch1_amount_data.csv&quot;) %&gt;% gather(&quot;data_type&quot;, &quot;value&quot;, -year)
+
+## gather is a function from tidyverse that replaces columns with indicators, and is used here to gather multiple lines on a single graph
+
+# big_data &lt;-  gather(big_data,  &quot;transient&quot;, &quot;financial&quot;, &quot;text&quot;, &quot;multimedia&quot;, &quot;mobile&quot;)
+
+big_data$amount &lt;- sqrt(big_data$value)
+
+big_data %&gt;% 
+ ggplot(aes(x = year, y = amount, col=data_type)) + 
+  geom_point(aes(color = data_type, size = amount), alpha = 0.5) +
+  scale_size(range = c(0.5, 12)) +
+  scale_y_continuous(trans = &quot;sqrt&quot;) +
+  xlim(1990,2020) +
+  xlab(&quot;Year&quot;) + 
+	ylab(&quot;Number of Bits of Storage&quot;) 
+  
+</div></code></pre>
+<p>The R language uses seven main storage formats for data: vectors, matrices, arrays, data frames, tibbles (tidyverse), lists and factors.</p>
+<h3 id="vectors">Vectors</h3>
+<pre class="hljs"><code><div>
+a &lt;- c(1,2,5.3,6,-2,4) # numeric vector
+b &lt;- c(&quot;one&quot;,&quot;two&quot;,&quot;three&quot;) # character vector
+c &lt;- c(TRUE,TRUE,TRUE,FALSE,TRUE,FALSE) #logical vector
+
+## Refer to elements of a vector using subscripts.
+
+a[c(2,4)] # 2nd and 4th elements of vector
+</div></code></pre>
+<h3 id="matrices">Matrices</h3>
+<p>All columns in a matrix must have the same mode(numeric, character, etc.) and the same length. The general format is</p>
+<pre class="hljs"><code><div>
+
+vector &lt;- seq(1, 25)
+r &lt;- 5
+c &lt;- 5
+
+char_vector_rownames &lt;- as.character(seq(1, 5))
+char_vector_colnames &lt;- as.character(seq(1, 5))
+
+mat &lt;- matrix(vector, nrow=r, ncol=c, byrow=FALSE, 
+  dimnames=list(char_vector_rownames, char_vector_colnames))
+
+mat
+
+mat &lt;- matrix(vector, nrow=r, ncol=c, byrow=TRUE, 
+  dimnames=list(char_vector_rownames, char_vector_colnames))
+
+mat
+
+# byrow=TRUE indicates that the matrix should be filled by rows. 
+# byrow=FALSE indicates that the matrix should be filled by columns (the default). 
+# dimnames provides optional labels for the columns and rows.
+
+# generate 5 x 4 numeric matrix 
+y &lt;- matrix(1:20, nrow=5,ncol=4)
+
+# another example
+cells &lt;- c(1,26,24,68)
+rnames &lt;- c(&quot;R1&quot;, &quot;R2&quot;)
+cnames &lt;- c(&quot;C1&quot;, &quot;C2&quot;) 
+mymatrix &lt;- matrix(cells, nrow=2, ncol=2, byrow=TRUE,
+  dimnames=list(rnames, cnames))
+
+# Identify rows, columns or elements using subscripts.
+
+mat[, 4] # 4th column of matrix
+mat[3,] # 3rd row of matrix 
+mat[2:4,1:3] # rows 2,3,4 of columns 1,2,3
+
+</div></code></pre>
+<h3 id="arrays">Arrays</h3>
+<p>Arrays are similar to matrices but can have more than two dimensions.</p>
+<pre class="hljs"><code><div># Create two vectors of different lengths.
+vector1 &lt;- c(5,9,3)
+vector2 &lt;- c(10,11,12,13,14,15)
+column.names &lt;- c(&quot;COL1&quot;,&quot;COL2&quot;,&quot;COL3&quot;)
+row.names &lt;- c(&quot;ROW1&quot;,&quot;ROW2&quot;,&quot;ROW3&quot;)
+matrix.names &lt;- c(&quot;Matrix1&quot;,&quot;Matrix2&quot;)
+
+# Take these vectors as input to the array.
+result &lt;- array(c(vector1,vector2),dim = c(3,3,2),dimnames = list(row.names,column.names,
+   matrix.names))
+print(result)
+</div></code></pre>
+<h3 id="data-frames-data-tables-and-tibbles">Data Frames, Data Tables and Tibbles</h3>
+<p>A data frame is more general than a matrix, in that different columns can have different modes (numeric, character, factor, etc.) similar to SAS and SPSS datasets. Data frames represent the most widely used format for data storage and retrieval in the R language</p>
+<pre class="hljs"><code><div>
+d &lt;- c(1,2,3,4)
+e &lt;- c(&quot;red&quot;, &quot;white&quot;, &quot;red&quot;, NA)
+f &lt;- c(TRUE,TRUE,TRUE,FALSE)
+mydata &lt;- data.frame(d,e,f)
+names(mydata) &lt;- c(&quot;ID&quot;,&quot;Color&quot;,&quot;Passed&quot;) # variable names
+
+# There are a variety of ways to identify the elements of a data frame .
+
+mydata[1:2] # columns 1 and 2 of data frame
+mydata[c(&quot;ID&quot;,&quot;Color&quot;)] # columns ID and Age from data frame
+mydata$X1 # variable x1 in the data frame
+
+</div></code></pre>
+<p>Tibbles are the tidyverse's improvements on data frames, designed to address problems in data analysis at an earlier point. Otherwise they are used exactly as data frames.</p>
+<p>In R, the basic rectangular data structure is a data.frame. A data.frame also has an implicit integer index based on the row order. While a custom key can be created through the row.names attribute, the native R data.frame does not support user-specified or multilevel indexes. To overcome this deficiency, two new packages are gaining widespread use: data.table and dplyr. Both support multilevel indexes and offer significant speedups in working with a data.frame.</p>
+<h3 id="lists">Lists</h3>
+<p>An ordered collection of objects (components). A list allows you to gather a variety of (possibly unrelated) objects under one name.</p>
+<pre class="hljs"><code><div>
+a &lt;- b &lt;- &quot;seven&quot;
+z &lt;- y &lt;- 0
+
+# example of a list with 4 components - 
+# a string, a numeric vector, a matrix, and a scaler 
+w &lt;- list(name=&quot;Fred&quot;, mynumbers=a, mymatrix=y, age=5.3)
+
+# example of a list containing two lists 
+list1 &lt;- list(name=&quot;Fred&quot;, mynumbers=a, mymatrix=y, age=5.3)
+list2 &lt;- list(name=&quot;Joe&quot;, mynumbers=b, mymatrix=z, age=10,11)
+v &lt;- c(list1,list2)
+
+## Identify elements of a list using the [[]] convention.
+
+w[[1]] # 1st component of the list
+v[[&quot;mynumbers&quot;]] # component named mynumbers in list
+</div></code></pre>
+<h3 id="factors">Factors</h3>
+<p>Tell R that a variable is nominal by making it a factor. The factor stores the nominal values as a vector of integers in the range [ 1... k ] (where k is the number of unique values in the nominal variable), and an internal vector of character strings (the original values) mapped to these integers.</p>
+<pre class="hljs"><code><div>
+# variable gender with 20 &quot;male&quot; entries and 
+# 30 &quot;female&quot; entries 
+gender &lt;- c(rep(&quot;male&quot;,20), rep(&quot;female&quot;, 30)) 
+gender &lt;- factor(gender) 
+# stores gender as 20 1s and 30 2s and associates
+# 1=female, 2=male internally (alphabetically)
+# R now treats gender as a nominal variable 
+
+summary(gender)
+
+# An ordered factor is used to represent an ordinal variable.
+
+# variable rating coded as &quot;large&quot;, &quot;medium&quot;, &quot;small'
+
+rating &lt;- c( &quot;medium&quot;,&quot;large&quot;, &quot;small&quot;)
+rating &lt;- ordered(rating)
+rating
+# recodes rating to 1,2,3 and associates
+# 1=large, 2=medium, 3=small internally
+# R now treats rating as ordinal
+
+</div></code></pre>
+<p>R  treats factors as nominal (i.e., label or naming) variables and ordered factors as ordinal variables in statistical procedures and graphical analyses. You can use options in the factor( ) and ordered( ) functions to control the mapping of integers to strings (overriding the alphabetical ordering). You can also use factors to create value labels.</p>
+<h3 id="useful-functions-for-dataset-inspection-and-manipulation">Useful Functions for Dataset Inspection and Manipulation</h3>
+<pre class="hljs"><code><div>
+library(kableExtra)
+
+arry &lt;- read.csv(&quot;~/audit_analytics_book/aaa_chapters_FINAL/tables/morph_array.csv&quot;) 
+
+arry %&gt;% 
+  kable(longtable=T) %&gt;% 
+  kable_styling(
+    bootstrap_options = c(&quot;striped&quot;, &quot;hover&quot;, &quot;condensed&quot;), 
+    full_width = F, 
+    font_size=10)
+
+length(arry) # number of elements or components
+str(arry)    # structure of an object 
+class(arry)  # class or type of an object
+names(arry)  # names
+
+list1 &lt;- list(&quot;a&quot;,&quot;b&quot;,&quot;c&quot;)
+
+c(list1, list1)       # combine objects into a vector
+cbind(list1, list1) # combine objects as columns
+rbind(list1, list1) # combine objects as rows 
+
+list1     # prints the object
+newobject &lt;- edit(list1) # edit copy and save as newobject 
+fix(list1)               # edit in place
+
+ls()       # list current objects
+rm(list1) # delete an object
+
+
+
+</div></code></pre>
+<h2 id="r-packages-required-for-this-chapter"><em>R</em> packages required for this chapter</h2>
+<p>This chapter's code requires the following packages to be installed: <code>tidyverse</code>, <code>kableExtra</code>,  <code>plotluck</code>, <code>broom</code>, <code>ggplot2</code>, <code>lubridate</code>and <code>reshape2</code>.</p>
+<p>Note: There are two steps to using a package.  First it must be <em>installed</em>, i.e., copied to a location on your computer where R can access it.  Then it must be <em>loaded</em> into the working memory of <em>R</em>.   To install, for example the <code>tidyverse</code> package, type <em>install.packages(“tidyverse”)</em> and then press the <em>Enter/Return</em> key.  To load the previously installed package type <em>library(tidyverse)</em>.  The <code>tidyverse</code> package is now available for use by your program code.</p>
+
+</body>
+</html>

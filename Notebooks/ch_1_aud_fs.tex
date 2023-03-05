@@ -1,0 +1,208 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{lmodern}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\usepackage{float}
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same} % disable monospaced font for URLs
+\hypersetup{
+  pdftitle={Fundamentals of Auditing Financial Reports},
+  pdfauthor={J. Christopher Westland},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\title{Fundamentals of Auditing Financial Reports}
+\usepackage{etoolbox}
+\makeatletter
+\providecommand{\subtitle}[1]{% add subtitle to \maketitle
+  \apptocmd{\@title}{\par {\large #1 \par}}{}{}
+}
+\makeatother
+\subtitle{Chapter 1}
+\author{J. Christopher Westland}
+\date{2023-03-05}
+
+\begin{document}
+\maketitle
+
+\hypertarget{auditing}{%
+\subsection{Auditing}\label{auditing}}
+
+An audit is an independent examination of the records of an organization
+to ascertain how far the financial statements as well as non-financial
+disclosures present a true and fair view of the concern. It also
+provides assurance that the systems of record keeping are
+well-controlled and accurate as required by law. Auditing has become
+such a ubiquitous phenomenon in the corporate and the public sector that
+academics started identifying an ``Audit Society''.
+
+\hypertarget{r-packages-required-for-this-book}{%
+\subsection{R packages required for this
+book}\label{r-packages-required-for-this-book}}
+
+The code in the chapters in this book requires R packages that are
+specified in the \texttt{library("package\_name")} commands. These will
+be packages such as \texttt{tidyverse}, \texttt{ggplot2},
+\texttt{lubridate} and \texttt{keras}. Keras is the API for the
+Tensorflow machine learning language, and requires a separate
+\texttt{keras} installation with \texttt{install\_keras}; general notes
+on Tensorflow installation are provided below.
+
+\textbf{Package installation:} There are two steps to using a package.
+First it must be \emph{installed}, i.e., copied to a location on your
+computer where R can access it. Then it must be \emph{loaded} into the
+working memory of \emph{R}. To install, for example the
+\texttt{tidyverse} package, type \emph{install.packages(``tidyverse'')}
+and then press the \emph{Enter/Return} key. To load the previously
+installed package type \emph{library(tidyverse)}. After these commands,
+the \texttt{tidyverse} package will now be available for use by your
+program code.
+
+\textbf{Tensorflow installation:} Tensorflow is a machine learning
+package used in this book; commands to Tensorflow are called using the
+Keras API. Prior to using the tensorflow R package you need to install a
+version of TensorFlow on your system using the R
+\texttt{install\_tensorflow()} function, which provides an easy to use
+wrapper for the various steps required to install TensorFlow. You can
+also choose to install TensorFlow manually (as described at
+\url{https://www.tensorflow.org/install/}).
+
+TensorFlow for R is tested and supported on the following 64-bit
+systems:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Ubuntu 16.04 or later
+\item
+  Windows 7 or later
+\item
+  macOS 10.12.6 (Sierra) or later (no GPU support)
+\end{enumerate}
+
+First, install the tensorflow R package from GitHub or the CRAN
+respository (search to find the site) then, use the
+\texttt{install\_tensorflow()} function to install TensorFlow. Note that
+on Windows you need a working installation of Anaconda.
+\texttt{install\_tensorflow()} is a wraper around
+\texttt{reticulate::py\_install}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{install.packages}\NormalTok{(}\StringTok{"tensorflow"}\NormalTok{)}
+\FunctionTok{library}\NormalTok{(tensorflow)}
+\FunctionTok{install\_tensorflow}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+You can confirm that the installation succeeded with:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(tensorflow)}
+\NormalTok{tf}\SpecialCharTok{$}\FunctionTok{constant}\NormalTok{(}\StringTok{"Hellow Tensorflow"}\NormalTok{)}
+\DocumentationTok{\#\# tf.Tensor(b\textquotesingle{}Hellow Tensorflow\textquotesingle{}, shape=(), dtype=string)}
+\end{Highlighting}
+\end{Shaded}
+
+This will provide you with a default installation of TensorFlow suitable
+for use with the tensorflow R package. There is much more to Tensorflow,
+and interested readers should review the materials at
+\url{https://tensorflow.rstudio.com/} and at
+\url{https://www.tensorflow.org/}
+
+\end{document}
